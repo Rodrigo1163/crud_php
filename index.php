@@ -29,6 +29,9 @@ require 'conexao.php';
                                 class="btn btn-primary float-end">
                                 Adicionar usuário
                             </a>
+                            <a href="geraexcel.php" class="btn btn-success float-end me-3">
+                                Gerar excel
+                            </a>
                         </h4>
                     </div>
                     <div class="card-body">
