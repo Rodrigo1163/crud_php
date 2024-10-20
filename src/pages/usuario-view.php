@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'conexao.php';
+require '../connection/conexao.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,16 +14,16 @@ require 'conexao.php';
 </head>
 
 <body>
-    <?php include('navbar.php'); ?>
+    <?php include('../components/navbar.php'); ?>
     <div class="container mt-5">
-        <?php include('mensagem.php'); ?>
+        <?php include('../components/mensagem.php'); ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>
                             Visualizar usuário
-                            <a href="index.php" class="btn btn-danger float-end">
+                            <a href="../pages/dashboard.php" class="btn btn-danger float-end">
                                 Voltar
                             </a>
                         </h4>

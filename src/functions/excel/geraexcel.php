@@ -1,6 +1,6 @@
 <?php
-include_once('conexao.php');
-include('vendor/autoload.php');
+require_once('../../connection/conexao.php');
+include('../../../vendor/autoload.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;

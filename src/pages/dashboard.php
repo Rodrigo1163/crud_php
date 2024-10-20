@@ -1,7 +1,14 @@
 <?php
 session_start();
+require '../connection/conexao.php';
 
-require 'conexao.php';
+$inputSearch = isset($_GET['search']) ? $_GET['search'] : '';
+if (empty($_GET['search'])) {
+    $query = 'SELECT * FROM usuarios';
+} else {
+    $query = "SELECT * FROM usuarios WHERE nome LIKE '%" . $inputSearch . "%'";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -11,14 +18,16 @@ require 'conexao.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD - PHP</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Todas as importações estão nesse crude -->
+    <?php include('../components/imports.php') ?>
 </head>
 
 <body>
-    <?php include('navbar.php'); ?>
+    <?php include('../components/navbar.php'); ?>
 
     <div class="container mt-4">
-        <?php include('mensagem.php'); ?>
+        <?php include('../components/mensagem.php'); ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -29,11 +38,20 @@ require 'conexao.php';
                                 class="btn btn-primary float-end">
                                 Adicionar usuário
                             </a>
-                            <a href="geraexcel.php" class="btn btn-success float-end me-3">
+                            <a href="../functions/excel/geraexcel.php" class="btn btn-success float-end me-3">
                                 Gerar excel
                             </a>
                         </h4>
                     </div>
+                    <div class="d-flex card-body gap-1">
+                        <input type="search" class="form-control" placeholder="Pesquisar" id="pesquisar" value="<?= $inputSearch ?>">
+                        <button onclick="searchRedirect()" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                            </svg>
+                        </button>
+                    </div>
+
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -47,7 +65,6 @@ require 'conexao.php';
                             </thead>
                             <tbody>
                                 <?php
-                                $query = 'SELECT * FROM usuarios';
                                 $usuarios = mysqli_query($conexao, $query);
                                 if (mysqli_num_rows($usuarios) > 0) {
                                     foreach ($usuarios as $usuario) {
@@ -65,7 +82,7 @@ require 'conexao.php';
                                                 <a href="usuario-edit.php?id=<?= $usuario['id'] ?>" class="btn btn-success btn-sm">
                                                     editar
                                                 </a>
-                                                <form action="acoes.php" method="POST" class="d-inline">
+                                                <form action="../functions/usuarios/delete_usuario.php" method="POST" class="d-inline">
                                                     <button
                                                         onclick="return confirm('Tem certeza que deseja excluir?')"
                                                         type="submit"
@@ -92,6 +109,7 @@ require 'conexao.php';
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../assets/js/searchDashboard.js"></script>
 </body>
 
 </html>

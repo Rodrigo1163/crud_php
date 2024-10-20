@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'conexao.php';
+require '../connection/conexao.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,16 +14,16 @@ require 'conexao.php';
 </head>
 
 <body>
-    <?php include('navbar.php'); ?>
+    <?php include('../components/navbar.php'); ?>
     <div class="container mt-5">
-        <?php include('mensagem.php'); ?>
+        <?php include('../components/mensagem.php'); ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>
                             Editar usuário
-                            <a href="index.php" class="btn btn-danger float-end">
+                            <a href="../pages/dashboard.php" class="btn btn-danger float-end">
                                 Voltar
                             </a>
                         </h4>
@@ -39,7 +39,7 @@ require 'conexao.php';
                             if (mysqli_num_rows($query) > 0) {
                                 $usuario = mysqli_fetch_array($query);
                         ?>
-                                <form action="acoes.php" method="POST">
+                                <form action="../functions/usuarios/update_usuario.php" method="POST">
                                     <input type="hidden" name="usuario_id" value="<?= $usuario['id']; ?>">
                                     <div class="mb-3">
                                         <label>Nome</label>
